@@ -1,37 +1,24 @@
-name: DevOps
+---
+name: build latest
+
 on:
-push:
-  branches:
-    — '*'
-  tags:
-    — '*'
-pull_request:
+  push:
+    branches:
+    - 'main'
+
 jobs:
-publish_docker_images:
-  runs-on: ubuntu-latest
-  steps:
-    — name: Checkout
-        uses: actions/checkout@v2
-    — name: Docker meta
-        id: meta
-        uses: crazy-max/ghaction-docker-meta@v2
-        with:
-          images: safernandez666/app
-          tags: |
-            type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'master') }}
-            type=ref,event=tag
-          flavor: |
-            latest=false
-    — name: Login to DockerHub
-        if: GitHub.event_name != 'pull_request'
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-    — name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: app/.
-          push: ${{ GitHub.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+  build-and-push-latest:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push
+      context: app/
+      file: ./Dockerfile
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: safernandez666/app:latest
