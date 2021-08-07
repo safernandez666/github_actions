@@ -5,7 +5,7 @@ on:
       — '*'
     tags:
       — '*'
- pull_request:
+pull_request:
 jobs:
   publish_docker_images:
     runs-on: ubuntu-latest
