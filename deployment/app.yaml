@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flaskapp
-        image: safernandez666/app:latest
+        image: safernandez666/app:${{ github.sha }}
         ports:
         - containerPort: 80
         imagePullPolicy: "Always"
