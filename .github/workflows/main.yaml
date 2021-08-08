@@ -1,30 +1,21 @@
 name: Publish Docker image
+
 on:
   push:
-    tags:
-      - "v*.*.*"
-    branches:
-      - main
+    branches: [ main ]
+
 jobs:
-  push_to_registry:
-    name: Build and push Docker image to Docker Hub
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set environment variable
-        run: echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
-      - name: Test environment variable
-        run: echo ${{ env.RELEASE_VERSION }}
-      - name: Check out GitHub repo
+      - name: 'Checkout GitHub Action'
         uses: actions/checkout@v2
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+      - name: Build and push docker
+        uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build image and push to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
+          repository: DOCKER_REGISTRY_URL
           context: .
           file: ./app/Dockerfile
-          push: true
-          tags: safernandez666/app:${{ env.RELEASE_VERSION }},safernandez666/app:latest
+          tags: latest
