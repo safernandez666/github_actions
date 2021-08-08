@@ -13,18 +13,3 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN}}
         dockerfile: ./Dockerfile
         tags: "latest,${{ github.sha }}"
-
-    - name: Deploy to Cluster
-      uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-      with:
-        args: set image --record deployment/flaskapp flaskapp=safernandez666/app:${{ github.sha }}
-    
-    - name: Verify Deployment
-      uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        KUBECTL_VERSION: "1.15"
-      with:
-        args: '"rollout status deployment/flaskapp"'
