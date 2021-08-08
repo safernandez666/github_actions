@@ -6,18 +6,15 @@ on:
       - 'main'
 
 jobs:
-  docker:
+  Build And Push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1.0
-        name: Check out code
-
-      - uses: mr-smithers-excellent/docker-build-push@v3
-        name: Build & push Docker image
-        with:
-          image: safernandez/app
-          tags: v1, latest
-          registry: registry-url.io
-          dockerfile: Dockerfile.ci
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: safernandez666/okteto
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ./Dockerfile
+        tags: "latest,${{ github.sha }}"
