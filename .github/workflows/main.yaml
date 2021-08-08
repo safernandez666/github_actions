@@ -1,21 +1,27 @@
-name: Publish Docker image
+name: Docker Image CI
 
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v2
-      - name: Build and push docker
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: safernandez666/app
-          context: .
-          file: ./app/Dockerfile
-          tags: latest
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKERHUB_USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_TOKEN}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+    - name: Build the Docker image
+      run: docker build . --file app/Dockerfile --tag safernandez666/app:$(date +%s)
+      
+    - name: Docker Push
+      run: docker push safernandez666/app:$(date +%s)
