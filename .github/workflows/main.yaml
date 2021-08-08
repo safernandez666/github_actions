@@ -24,7 +24,7 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: set image deployment.apps/flaskapp-deployment flaskapp=safernandez666/app:${{ github.sha }}
+        args: set image --record deployment.apps/flaskapp-deployment flaskapp=safernandez666/app:${{ github.sha }}
     
     - name: Verify Deployment
       uses: steebchen/kubectl@master
