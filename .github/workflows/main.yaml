@@ -16,5 +16,6 @@ jobs:
         name: safernandez666/app
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+        workdir: app
         dockerfile: ./Dockerfile
         tags: "latest,${{ github.sha }}"
