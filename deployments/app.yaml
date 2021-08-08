@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flaskapp-deployment
+  name: app_deploy
   namespace: safernandez666
   labels:
-    app: flaskapp
+    app: app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: flaskapp
+      app: app
   template:
     metadata:
       labels:
-        app: flaskapp
+        app: app
     spec:
       containers:
-      - name: flaskapp
+      - name: app
         image: safernandez666/app:${{ github.sha }}
         ports:
         - containerPort: 80
@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:  
-  name: flaskapp-deployment
+  name: app_deploy
   namespace: safernandez666
 spec:
   selector:
-    app: flaskapp
+    app: app
   type: LoadBalancer
   ports:  
   - name: http
