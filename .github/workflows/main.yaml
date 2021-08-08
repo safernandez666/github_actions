@@ -1,12 +1,7 @@
-name: Publish Docker image
-
-on:
-  push:
-    branches:
-      - 'main'
-
+name: Publish To Docker & Okteto
+on: [push]
 jobs:
-  Build:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -15,16 +10,16 @@ jobs:
       with:
         name: safernandez666/app
         username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-        workdir: app
+        password: ${{ secrets.DOCKERHUB_TOKEN}}
         dockerfile: ./Dockerfile
         tags: "latest,${{ github.sha }}"
+
     - name: Deploy to Cluster
       uses: steebchen/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: --namespace safernandez666 set image --record deployment/flaskapp-deployment flaskapp=safernandez666/app:${{ github.sha }}
+        args: set image --record deployment/flaskapp flaskapp=safernandez666/app:${{ github.sha }}
     
     - name: Verify Deployment
       uses: steebchen/kubectl@master
@@ -32,4 +27,4 @@ jobs:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         KUBECTL_VERSION: "1.15"
       with:
-        args: '"rollout status deployment/flaskapp-deployment"'
+        args: '"rollout status deployment/flaskapp"'
