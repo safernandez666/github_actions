@@ -25,6 +25,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./app/Dockerfile
+          file: /app/Dockerfile
           push: true
           tags: safernandez666/app:${{ env.RELEASE_VERSION }},safernandez666/app:latest
