@@ -36,7 +36,7 @@ jobs:
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
           version: latest
-          args: set image --record deployment/app-deploy app=safernandez666/app:${{ github.sha }}
+          args: set image --record deployment/app-deploy app-deploy=safernandez666/app:${{ github.sha }}
       - 
         name: Verify deployment
         uses: myrotvorets/kubectl-action@2.0.0
