@@ -27,16 +27,14 @@ jobs:
         with:
           context: .
           push: true
-          tags: safernandez666/app:latest,safernandez666/app:${{ github.sha }}
-          cache-from: type=registry,ref=safernandez666/app:latest
-          cache-to: type=inline       
+          tags: safernandez666/app:latest,safernandez666/app:${{ github.sha }}  
       - 
         name: Deploy to Cluster
         uses: steebchen/kubectl@v2.0.0
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: set image --record deployment.apps/app-deploy app-deploy=safernandez666/app:${{ github.sha }}   
+          args: set image --record deployment.apps/app-deploy app-deploy=safernandez666/app:${{ github.sha }}  -n safernandez666 
       - 
         name: Verify Deployment
         uses: steebchen/kubectl@v2.0.0
