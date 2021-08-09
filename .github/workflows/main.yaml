@@ -25,6 +25,8 @@ jobs:
         name: Build and Push
         uses: docker/build-push-action@v2
         with:
+          tag_with_ref: true
+          tag_with_sha: true
           context: .
           push: true
           tags: safernandez666/app:latest,safernandez666/app:${{ github.sha }}
@@ -37,7 +39,7 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: set image --record deployment/app_deploy app-deploy=safernandez666/app:${{ github.sha }} 
+          args: set image --record deployment.apps/app-deploy app-deploy=safernandez666/app:${{ github.sha }} 
       
       - 
         name: Verify Deployment
@@ -46,4 +48,4 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
           KUBECTL_VERSION: "1.15"
         with:
-          args: '"rollout status deployment/app_deploy"'
+          args: '"rollout status deployment.apps/app-deploy"
