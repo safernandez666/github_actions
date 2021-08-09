@@ -6,7 +6,7 @@ on:
       - 'main'
 
 jobs:
-  docker:
+  CI:
     runs-on: ubuntu-latest
     steps:
       -
@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and Push
         uses: docker/build-push-action@v2
         with:
           context: .
