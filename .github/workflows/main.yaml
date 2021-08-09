@@ -28,5 +28,5 @@ jobs:
           context: .
           push: true
           tags: safernandez666/app:latest,safernandez666/app:${{ github.sha }}"
-          cache-from: type=registry,ref=user/app:latest
+          cache-from: type=registry,ref=safernandez666/app:latest
           cache-to: type=inline
