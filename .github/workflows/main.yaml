@@ -32,14 +32,15 @@ jobs:
           cache-to: type=inline       
       - 
         name: Deploy to Cluster
-        uses: steebchen/kubectl@master
+        uses: steebchen/kubectl@v2.0.0
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+          KUBECTL_VERSION: "1.15"
         with:
           args: set image --record deployment.apps/app-deploy app-deploy=safernandez666/app:${{ github.sha }}   
       - 
         name: Verify Deployment
-        uses: steebchen/kubectl@master
+        uses: steebchen/kubectl@v2.0.0
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
           KUBECTL_VERSION: "1.15"
