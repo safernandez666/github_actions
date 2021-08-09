@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app_deploy
+  name: app-deploy
   namespace: safernandez666
   labels:
-    app: app
+    app: app-deploy
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: app
+      app: app-deploy
   template:
     metadata:
       labels:
-        app: app
+        app: app-deploy
     spec:
       containers:
-      - name: app
-        image: safernandez666/app:${{ github.sha }}
+      - name: app-deploy
+        image: safernandez666/app:latest
         ports:
         - containerPort: 80
         imagePullPolicy: "Always"
@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:  
-  name: app_deploy
+  name: app-deploy
   namespace: safernandez666
 spec:
   selector:
-    app: app
+    app: app-deploy
   type: LoadBalancer
   ports:  
   - name: http
