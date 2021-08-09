@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: app-deploy
-        image: safernandez666/app:latest
+        image: <IMAGE>
         ports:
         - containerPort: 80
         imagePullPolicy: "Always"
