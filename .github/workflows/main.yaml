@@ -37,7 +37,7 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: set image --record deployment/app_deploy app=safernandez666/app:${{ github.sha }} 
+          args: set image --record deployment/app_deploy app-deploy=safernandez666/app:${{ github.sha }} 
       
       - 
         name: Verify Deployment
