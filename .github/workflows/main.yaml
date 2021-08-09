@@ -48,4 +48,4 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
           KUBECTL_VERSION: "1.15"
         with:
-          args: '"rollout status deployment.apps/app-deploy"
+          args: '"rollout status deployment.apps/app-deploy"'
