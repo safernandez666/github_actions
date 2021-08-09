@@ -32,6 +32,7 @@ jobs:
           cache-to: type=inline
   CD:
     runs-on: ubuntu-latest
+    if: github.event_name == 'CI' && github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to Cluster
         uses: steebchen/kubectl@master
