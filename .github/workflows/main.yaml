@@ -29,19 +29,18 @@ jobs:
           push: true
           tags: safernandez666/app:latest,safernandez666/app:${{ github.sha }}  
       - 
-        name: checkout
-        uses: actions/checkout@master
-        
-      - uses: okteto/login@master
+        uses: actions/checkout@v2
+      - 
+        name: Deploy to cluster
+        uses: myrotvorets/kubectl-action@2.0.0
         with:
-          token: ${{ secrets.KUBE_CONFIG_DATA }}
-      
-      - name: "Activate personal namespace"
-        uses: okteto/namespace@master
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          version: latest
+          args: set image --record deployment/app-deploy app=safernandez666/app:${{ github.sha }}
+      - 
+        name: Verify deployment
+        uses: myrotvorets/kubectl-action@2.0.0
         with:
-          name: safernandez666
-
-      - name: "Create deployment"
-        uses: okteto/apply@master
-        with:
-          manifest: deployments/app.yaml
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          version: latest
+          args: rollout status deployment/app-deploy
