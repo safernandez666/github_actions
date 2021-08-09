@@ -25,7 +25,7 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Push image to Docker Hub
-        run: docker push safernandez666/app:'${TAG}'
+        run: docker push safernandez666/app
 
       - name: Update deployment file
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|safernandez666/app:'${TAG}'|' $GITHUB_WORKSPACE/deployments/app.yml
