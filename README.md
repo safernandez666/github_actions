@@ -21,3 +21,18 @@ Deberia quedarnos, asi.
 <p align="center">
 <img src="screenshots/Secrets_Github.png" width="800" >
 </p>
+
+### Secrets Okteto
+
+Vamos a utilizar un cluster free, como Okteto, para jugar. Descargamos la configuracion y creamos el secreto. Primero vamos a pasarlo a Base64 y luego cargarlo.
+
+<p align="center">
+<img src="screenshots/Base64.png" width="800" >
+</p>
+
+Agregamos el Output
+
+<p align="center">
+<img src="screenshots/Okteto.png" width="800" >
+</p>
+
