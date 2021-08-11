@@ -32,17 +32,15 @@ jobs:
         uses: actions/checkout@v2
 
       ### Deploy en Cluster Okteto
-      - 
-        name: Deploy to cluster
-        uses: myrotvorets/kubectl-action@2.0.0
+      - uses: actions/checkout@master
+      - name: deploy to cluster
+        uses: steebchen/kubectl@v2.0.0
+        with: # defaults to latest kubectl binary version
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          command: set image --record deployments/app-deploy app-deploy=safernandez666/app:${{ github.sha }}
+      - name: verify deployment
+        uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
-          version: latest
-          args: set image --record deployments/app-deploy app-deploy=safernandez666/app:${{ github.sha }}
-      - 
-        name: Verify deployment
-        uses: myrotvorets/kubectl-action@2.0.0
-        with:
-          config: ${{ secrets.KUBE_CONFIG_DATA }}
-          version: latest
-          args: '"rollout status deployments/app-deploy"'
+          version: v1.21.0 # specify kubectl binary version explicitly
+          command: rollout status deployments/app-deploy
