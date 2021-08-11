@@ -31,20 +31,7 @@ jobs:
       - 
         uses: actions/checkout@v2
 
-      ### Deploy en Cluster de Okteto
-      - uses: okteto/login@master
-        with:
-          token: ${{ secrets.OKTETO_TOKEN }}
-      
-      - name: "Activate personal namespace"
-        uses: okteto/namespace@master
-        with:
-          name: safernandez666
-
-      - name: "Create deployment"
-        uses: okteto/apply@master
-        with:
-          manifest: deployments/app.yaml
+      ### Deploy en Cluster Okteto
       - 
         name: Deploy to cluster
         uses: myrotvorets/kubectl-action@2.0.0
